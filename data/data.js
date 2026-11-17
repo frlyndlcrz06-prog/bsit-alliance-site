@@ -26,33 +26,52 @@ const OFFICERS = [
 const MOTTO = ["EXCELLENCE", "INNOVATION", "INTEGRITY"];
 
 /* ---------- EVENTS ----------
-   status: "upcoming" or "done"     date: any text
-   photos: 2 to 3 files inside photos/events/  (missing photos show a colored placeholder)
-   description: shown when a visitor clicks the event. Edit these to match the real event. */
+   id:     short name with no spaces (used in the page link, so never change it after sharing)
+   status: "upcoming" or "done"
+   photos: shots("name", 12) loads photos/events/name-1.jpg, name-2.jpg ... up to 12.
+           Photos that don't exist are skipped, so just add files and name them in order.
+   description: the summary shown on the event's page. Edit these to match the real event. */
+function shots(name, max) {
+  var list = [];
+  for (var i = 1; i <= max; i++) list.push("photos/events/" + name + "-" + i + ".jpg");
+  return list;
+}
+
 const EVENTS = [
   {
-    title: "BSIT Freshmen Day", date: "TBA", status: "upcoming",
+    id: "freshmen-day", title: "BSIT Freshmen Day", date: "TBA", status: "upcoming",
+    photos: shots("freshmen-day", 12),
     description: "A welcome event for the incoming BSIT students, where the Alliance introduces its officers, activities, and the BSIT community."
   },
   {
-    title: "Alliance Membership Drive", date: "April 2027", status: "upcoming",
-    description: "A drive that invites BSIT students to officially join the Alliance and take part in its projects."
+    id: "membership-drive", title: "Alliance Membership Drive", date: "April 2027", status: "upcoming",
+    photos: shots("membership-drive", 12),
+    description: "The yearly drive that invites BSIT students to officially join the Alliance and take part in its projects."
   },
   {
-    title: "17th Founding Anniversary: Mobile Legends Tournament", date: "June 2026", status: "done",
-    photos: ["photos/events/mlbb-1.jpg", "photos/events/mlbb-2.jpg", "photos/events/mlbb-3.jpg"],
-    description: "An esports tournament held for the PUP Calauan Campus' 17th Founding Anniversary, where teams from all programs of PUPC community competed in Mobile Legends."
+    id: "mlbb", title: "17th Founding Anniversary: Mobile Legends Tournament", date: "2026", status: "done",
+    photos: shots("mlbb", 12),
+    description: "An esports tournament held for the Alliance's 17th Founding Anniversary, where teams from the BSIT community competed in Mobile Legends."
   },
   {
-    title: "Balik Sinta 2026: BSIT Alliance Booth", date: "August 25, 2026", status: "done",
-    photos: ["photos/events/balik-sinta-booth-1.jpg", "photos/events/balik-sinta-booth-2.jpg", "photos/events/balik-sinta-booth-3.jpg"],
+    id: "balik-sinta-booth", title: "Balik Sinta 2026: BSIT Alliance Booth", date: "2026", status: "done",
+    photos: shots("balik-sinta-booth", 12),
     description: "The Alliance's booth during Balik Sinta 2026, where officers and members met students and shared what BSIT Alliance is about."
   },
   {
-    title: "Balik Sinta 2026: BSIT Exhibit", date: "2026", status: "done",
-    photos: ["photos/events/balik-sinta-exhibit-1.jpg", "photos/events/balik-sinta-exhibit-2.jpg"],
+    id: "balik-sinta-exhibit", title: "Balik Sinta 2026: BSIT Exhibit", date: "2026", status: "done",
+    photos: shots("balik-sinta-exhibit", 12),
     description: "The BSIT exhibit at Balik Sinta 2026, showcasing the projects and work of BSIT students."
   }
+];
+
+/* ---------- APPROVAL LETTERS ----------
+   file: the PDF inside the letters/ folder (lowercase, no spaces, like letters/mlbb-approval.pdf)
+   Delete any line whose PDF you haven't added yet. */
+const LETTERS = [
+  { title: "Approval Letter: 17th Founding Anniversary: Mobile Legends Tournament",        date: "2026", file: "letters/mlbb-approval.pdf" },
+  { title: "Approval Letter: BSIT Official Departmental Shirt",           date: "2026", file: "letters/bsit-official-dept-shirt-approval.pdf" },
+  { title: "Approval Letter: Balik Sinta 2026 Exhibit",         date: "2026", file: "letters/balik-sinta-exhibit-approval.pdf" }
 ];
 
 /* ---------- ANNOUNCEMENTS (newest first) ---------- */
