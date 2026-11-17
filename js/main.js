@@ -685,3 +685,32 @@
     }, 0.3);
   }
 })();
+
+/* ===== Round 3: Facebook feed (appended) ===== */
+(function () {
+  "use strict";
+  var ann = document.getElementById("announcements");
+  if (!ann || typeof FACEBOOK_URL === "undefined") return;
+  function el(tag, cls, text) { var n = document.createElement(tag); if (cls) n.className = cls; if (text !== undefined) n.textContent = text; return n; }
+
+  var sec = el("section", "section wrap"); sec.id = "facebook";
+  sec.appendChild(el("h2", "", "Latest from our Facebook page"));
+  var wrap = el("div", "fb-wrap"), card = el("div", "fb-card"), hold = el("div", "fb-hold");
+  card.appendChild(el("h3", "", "Stay updated"));
+  card.appendChild(el("p", "", "See our newest posts, photos, and event updates on Facebook."));
+  var a = el("a", "btn small fill", "Follow us on Facebook"); a.href = FACEBOOK_URL; a.target = "_blank"; a.rel = "noopener";
+  card.appendChild(a);
+  card.appendChild(el("p", "meta", "If the feed does not load, your browser may be blocking it. Use the button above."));
+  wrap.appendChild(card); wrap.appendChild(hold); sec.appendChild(wrap);
+  ann.parentNode.insertBefore(sec, ann.nextSibling);
+
+  /* load Facebook's page plugin only when the visitor scrolls near it */
+  new IntersectionObserver(function (items, o) {
+    if (!items[0].isIntersecting) return;
+    o.disconnect();
+    var f = el("iframe", "fb-frame"); f.title = "Facebook page feed"; f.loading = "lazy"; f.setAttribute("allow", "encrypted-media");
+    f.src = "https://www.facebook.com/plugins/page.php?href=" + encodeURIComponent(FACEBOOK_URL) +
+      "&tabs=timeline&width=500&height=640&small_header=false&adapt_container_width=true&hide_cover=false&show_facepile=true";
+    hold.appendChild(f);
+  }, { rootMargin: "200px" }).observe(sec);
+})();
