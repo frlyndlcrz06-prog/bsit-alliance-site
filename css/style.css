@@ -230,3 +230,29 @@ button.btn{font:600 1rem var(--body);cursor:pointer;background:transparent}
 [data-theme=dark] .tab,[data-theme=dark] .btn.small{color:#f0b8c2;border-color:#f0b8c2}
 [data-theme=dark] .tab.on,[data-theme=dark] .tab:hover,[data-theme=dark] .btn.small:hover,[data-theme=dark] .btn.small.fill{background:var(--maroon);color:#fff;border-color:var(--maroon)}
 [data-theme=dark] .searchbox{background:var(--mist);color:var(--ink);border-color:#4a4153}
+
+/* ===== funds report ===== */
+.report{display:grid;grid-template-columns:minmax(0,1.7fr) minmax(0,1fr);gap:2rem;align-items:start;margin-top:1.5rem}
+@media(max-width:900px){.report{grid-template-columns:1fr}.running{order:-1}}
+.rsec{margin-bottom:1rem;background:var(--white);box-shadow:0 2px 8px rgba(31,27,36,.12)}
+.rsec summary{display:flex;flex-wrap:wrap;gap:.25rem 1rem;padding:.9rem 1.1rem;background:var(--maroon-dark);color:#fff;font-weight:700;cursor:pointer;list-style:none}
+.rsec summary::-webkit-details-marker{display:none}
+.rsec summary::after{content:"+";margin-left:auto;color:var(--gold);font-size:1.3rem;line-height:1}
+.rsec[open] summary::after{content:"\2212"}
+.re{color:var(--gold);font-weight:600}
+.tscroll{overflow-x:auto}
+.rtable{width:100%;border-collapse:collapse;font-size:.95rem}
+.rtable th,.rtable td{padding:.55rem .75rem;border-bottom:1px solid #e2dfe5;text-align:left}
+.rtable th{background:var(--mist);font-size:.8rem;text-transform:uppercase;letter-spacing:.04em}
+.rtable .n{text-align:right;white-space:nowrap}
+.rtable .inc{background:#e3f4e6;color:#1d6b2f;font-weight:600}
+.rtable .exp{background:#fbe4e4;color:#9b1c1c;font-weight:600}
+.running{position:sticky;top:5rem;background:var(--white);box-shadow:0 2px 8px rgba(31,27,36,.12)}
+.running h3{margin:0;padding:1rem 1.1rem;background:var(--maroon-dark);color:#fff;text-align:center}
+.running .hl td{background:#fdf0d0;color:#1f1b24;font-weight:700}
+.running .hl small{color:#5d5864}
+.running small{display:block;color:var(--muted);font-weight:400}
+[data-theme=dark] .rsec,[data-theme=dark] .running{background:#25202b}
+[data-theme=dark] .rtable th,[data-theme=dark] .rtable td{border-color:#3a3340}
+[data-theme=dark] .rtable .inc{background:#1f3a27;color:#8fe0a4}
+[data-theme=dark] .rtable .exp{background:#40222a;color:#f3a5ae}
