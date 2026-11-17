@@ -338,3 +338,32 @@ button.btn{font:600 1rem var(--body);cursor:pointer;background:transparent}
 
 [data-theme=dark] .tl-card,[data-theme=dark] .ch-card{background:#25202b}
 [data-theme=dark] .trk div{background:#3a3340}
+
+/* ===== round 3: glass look + Facebook feed ===== */
+body{background:radial-gradient(640px circle at 0% 18%,rgba(123,30,46,.08),transparent 70%),radial-gradient(640px circle at 100% 55%,rgba(224,169,42,.12),transparent 70%),#fff;background-attachment:fixed}
+.band{background:radial-gradient(520px circle at 8% 15%,rgba(123,30,46,.16),transparent 70%),radial-gradient(480px circle at 92% 30%,rgba(224,169,42,.22),transparent 70%),radial-gradient(520px circle at 55% 95%,rgba(31,58,95,.16),transparent 70%),var(--mist)}
+
+.event-card,.funds div,.letter,.tl-card,.ch-card,.rsec,.running,.event-nav a,.announcement,.fb-card{background:rgba(255,255,255,.62);-webkit-backdrop-filter:blur(12px) saturate(150%);backdrop-filter:blur(12px) saturate(150%);box-shadow:0 8px 24px rgba(31,27,36,.12),inset 0 0 0 1px rgba(255,255,255,.55);border-radius:12px}
+.rsec,.running{overflow:hidden}
+.rtable th{background:rgba(241,239,243,.7)}
+.announcement{padding-right:1.25rem}
+
+.motto{display:inline-flex;padding:.55rem 1.3rem;border-radius:999px;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.28);-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px)}
+.hero .btn:not(.primary){background:rgba(255,255,255,.1);-webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px)}
+.hero .btn:not(.primary):hover{background:rgba(255,255,255,.22)}
+.modal{-webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px)}
+
+.fb-wrap{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,520px);gap:2rem;align-items:center;margin-top:1.5rem}
+@media(max-width:860px){.fb-wrap{grid-template-columns:1fr}}
+.fb-card{padding:2rem}
+.fb-card h3{font-size:1.4rem}
+.fb-card p{margin:.4rem 0 1.2rem}
+.fb-card .meta{margin:1.2rem 0 0;font-size:.9rem}
+.fb-hold{min-height:200px}
+.fb-frame{display:block;width:100%;max-width:500px;height:640px;border:0;background:#fff;border-radius:12px;box-shadow:0 8px 24px rgba(31,27,36,.18)}
+
+/* glass in dark mode */
+[data-theme=dark] body{background:radial-gradient(640px circle at 0% 18%,rgba(192,69,90,.14),transparent 70%),radial-gradient(640px circle at 100% 55%,rgba(224,169,42,.1),transparent 70%),#141116;background-attachment:fixed}
+[data-theme=dark] .band{background:radial-gradient(520px circle at 8% 15%,rgba(123,30,46,.35),transparent 70%),radial-gradient(480px circle at 92% 30%,rgba(224,169,42,.12),transparent 70%),radial-gradient(520px circle at 55% 95%,rgba(31,58,95,.4),transparent 70%),#1d1922}
+[data-theme=dark] .event-card,[data-theme=dark] .funds div,[data-theme=dark] .letter,[data-theme=dark] .tl-card,[data-theme=dark] .ch-card,[data-theme=dark] .rsec,[data-theme=dark] .running,[data-theme=dark] .event-nav a,[data-theme=dark] .announcement,[data-theme=dark] .fb-card{background:rgba(37,32,43,.62);box-shadow:0 8px 24px rgba(0,0,0,.35),inset 0 0 0 1px rgba(255,255,255,.08)}
+[data-theme=dark] .rtable th{background:rgba(255,255,255,.06)}
