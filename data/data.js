@@ -72,7 +72,7 @@ const LETTERS = [
 
 /* ---------- ANNOUNCEMENTS (newest first) ---------- */
 const ANNOUNCEMENTS = [
-  { title: "Welcome to the new Alliance website", date: "March 2026", body: "Announcements, events, and officer updates will be posted here." }
+  { title: "Welcome to the new Alliance website", date: "November 2026", tag: "Notice", isNew: true, body: "Announcements, events, and officer updates will be posted here." }
 ];
 
 /* ---------- FUNDS (summary only, this site is public) ---------- */
