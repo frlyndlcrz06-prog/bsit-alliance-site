@@ -11,6 +11,7 @@
   <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
+  <div id="progress" aria-hidden="true"></div>
   <header class="topbar">
     <a class="brand" href="#top">PUPC BSIT Alliance</a>
     <nav aria-label="Main">
@@ -22,43 +23,52 @@
   </header>
 
   <main id="top">
-    <section class="hero">
-      <div class="wrap">
+    <section class="hero" id="hero">
+      <div class="glyphs" id="glyphs" aria-hidden="true"></div>
+      <div class="wrap hero-inner">
+        <p class="eyebrow">Polytechnic University of the Philippines, Calauan</p>
         <h1>PUPC BSIT Alliance</h1>
+        <p class="motto" id="motto" aria-label="Our motto"></p>
         <p class="lead">The student organization of Bachelor of Science in Information Technology students at PUP Calauan, Laguna.</p>
         <div class="actions">
           <a class="btn primary" href="#officers">Meet the officers</a>
-          <a class="btn" id="fb-link" href="#" target="_blank" rel="noopener">Follow us on Facebook</a>
+          <a class="btn" href="#events">See our events</a>
+          <a class="btn" id="fb-link" href="#" target="_blank" rel="noopener">Facebook</a>
         </div>
       </div>
     </section>
 
-    <section id="officers" class="section wrap">
+    <section id="officers" class="section wrap reveal">
       <h2>Our officers</h2>
       <p class="section-note">The people leading the Alliance this school year.</p>
       <div id="officer-grid" class="officer-grid"></div>
     </section>
 
     <section id="events" class="section band">
-      <div class="wrap">
+      <div class="wrap reveal">
         <h2>Events</h2>
-        <h3>Upcoming</h3>
-        <ul id="events-upcoming" class="event-list"></ul>
-        <h3>Past events</h3>
-        <ul id="events-done" class="event-list"></ul>
+        <p class="section-note">Click an event to see photos and details.</p>
+        <div class="tabs" role="group" aria-label="Filter events">
+          <button class="tab on" data-filter="all">All</button>
+          <button class="tab" data-filter="upcoming">Upcoming</button>
+          <button class="tab" data-filter="done">Past</button>
+        </div>
+        <div id="event-grid" class="event-grid"></div>
       </div>
     </section>
 
-    <section id="announcements" class="section wrap">
+    <section id="announcements" class="section wrap reveal">
       <h2>Announcements</h2>
       <div id="announcement-list"></div>
     </section>
 
     <section id="funds" class="section band">
-      <div class="wrap">
+      <div class="wrap reveal">
         <h2>Alliance funds</h2>
         <p class="section-note" id="funds-note"></p>
         <dl id="funds-summary" class="funds"></dl>
+        <div class="bar" aria-hidden="true"><i id="funds-bar"></i></div>
+        <p class="bar-label" id="funds-bar-label"></p>
       </div>
     </section>
   </main>
@@ -69,6 +79,22 @@
       <p><a id="fb-link-footer" href="#" target="_blank" rel="noopener">Facebook page</a></p>
     </div>
   </footer>
+
+  <div class="modal" id="modal" hidden>
+    <div class="modal-box" role="dialog" aria-modal="true" aria-labelledby="m-title">
+      <button class="modal-close" id="m-close" aria-label="Close">&times;</button>
+      <div class="gallery">
+        <div class="g-main" id="g-main"></div>
+        <div class="g-thumbs" id="g-thumbs"></div>
+      </div>
+      <div class="m-text">
+        <span class="pill" id="m-status"></span>
+        <h3 id="m-title"></h3>
+        <p class="meta" id="m-date"></p>
+        <p id="m-desc"></p>
+      </div>
+    </div>
+  </div>
 
   <script src="data/data.js"></script>
   <script src="js/main.js"></script>
