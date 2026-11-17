@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>PUPC BSIT Alliance</title>
+  <meta name="description" content="Official website of the BSIT Alliance, Polytechnic University of the Philippines Calauan campus.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Sora:wght@600;700;800&family=Source+Sans+3:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <header class="topbar">
+    <a class="brand" href="#top">PUPC BSIT Alliance</a>
+    <nav aria-label="Main">
+      <a href="#officers">Officers</a>
+      <a href="#events">Events</a>
+      <a href="#announcements">Announcements</a>
+      <a href="#funds">Funds</a>
+    </nav>
+  </header>
+
+  <main id="top">
+    <section class="hero">
+      <div class="wrap">
+        <h1>PUPC BSIT Alliance</h1>
+        <p class="lead">The student organization of Bachelor of Science in Information Technology students at PUP Calauan, Laguna.</p>
+        <div class="actions">
+          <a class="btn primary" href="#officers">Meet the officers</a>
+          <a class="btn" id="fb-link" href="#" target="_blank" rel="noopener">Follow us on Facebook</a>
+        </div>
+      </div>
+    </section>
+
+    <section id="officers" class="section wrap">
+      <h2>Our officers</h2>
+      <p class="section-note">The people leading the Alliance this school year.</p>
+      <div id="officer-grid" class="officer-grid"></div>
+    </section>
+
+    <section id="events" class="section band">
+      <div class="wrap">
+        <h2>Events</h2>
+        <h3>Upcoming</h3>
+        <ul id="events-upcoming" class="event-list"></ul>
+        <h3>Past events</h3>
+        <ul id="events-done" class="event-list"></ul>
+      </div>
+    </section>
+
+    <section id="announcements" class="section wrap">
+      <h2>Announcements</h2>
+      <div id="announcement-list"></div>
+    </section>
+
+    <section id="funds" class="section band">
+      <div class="wrap">
+        <h2>Alliance funds</h2>
+        <p class="section-note" id="funds-note"></p>
+        <dl id="funds-summary" class="funds"></dl>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="wrap">
+      <p>BSIT Alliance, Polytechnic University of the Philippines, Calauan Campus</p>
+      <p><a id="fb-link-footer" href="#" target="_blank" rel="noopener">Facebook page</a></p>
+    </div>
+  </footer>
+
+  <script src="data/data.js"></script>
+  <script src="js/main.js"></script>
+</body>
+</html>
