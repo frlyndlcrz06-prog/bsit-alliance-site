@@ -77,7 +77,60 @@ const ANNOUNCEMENTS = [
 
 /* ---------- FUNDS (summary only, this site is public) ---------- */
 const FUNDS = {
-  asOf: "November 2026",
+  asOf: "September 2026",
   collected: 9070,
   spent: 8161.25
+};
+
+
+/* ---------- FINANCIAL REPORT ----------
+   Each row is: [date, description, income, expense, balance after the row]
+   Use 0 where there is no income or no expense. */
+const REPORT = {
+  asOf: "Sept 2026",
+  running: [
+    { category: "Total Income", amount: 9070, note: "Total Accumulated Income" },
+    { category: "Total Expenses", amount: 8161.25, note: "Total Expenditures Incurred" },
+    { category: "Current Alliance Funds", amount: 908.75, note: "Remaining Balance Available for Future BSIT Alliance Activities and Programs.", highlight: true }
+  ],
+  sections: [
+    {
+      title: "Alliance Merch & Shirts",
+      rows: [
+        ["May 2026", "Alliance Shirt Contributions (₱350 x 10)", 3500, 0, 3500],
+        ["May 2026", "Shirt Payment", 0, 3500, 0],
+        ["May 2026", "Merch Contributions (₱50 x 9)", 450, 0, 450],
+        ["May 2026", "Button Pins Expense (50 pcs + ₱44 sf)", 0, 294, 156],
+        ["May 2026", "Sales of Merch (Batch 1 - 50 pcs @ ₱20)", 1000, 0, 1156],
+        ["June 2026", "New Order of Merch (200 pcs + ₱104 sf)", 0, 1104, 52]
+      ]
+    },
+    {
+      title: "Founding Anniversary: Mobile Legends Tournament",
+      rows: [
+        ["June 2026", "Registration Fees (20 teams x ₱100)", 2000, 0, 2052],
+        ["June 2026", "Event Expenses (Badges, Candies, Certs, Water, Burgers, Prizes, TV, Editor App)", 0, 1518, 534]
+      ]
+    },
+    {
+      title: "Balik Sinta Event",
+      rows: [
+        ["June 2026", "Founding Anniv Pin Sales (Batch 2 - 53 pcs x ₱20)", 1060, 0, 1594],
+        ["August 2026", "Event Expenses (Food - Free Sopas & Materials)", 0, 1256.25, 337.75],
+        ["August 2026", "Balik Sinta Pin Sales (Batch 2 - 34 pcs x ₱20)", 680, 0, 1017.75]
+      ]
+    },
+    {
+      title: "IT Activities & Merch Transactions (September 2026)",
+      rows: [
+        ["Sept. 8, 2026", "Sales of Merch (Button Pins - 5 pcs @ ₱20)", 100, 0, 1117.75],
+        ["Sept. 9, 2026", "Cartolina Purchase (3 pcs @ ₱10)", 0, 30, 1087.75],
+        ["Sept. 9, 2026", "Printing Expense (IT Homeroom Officers' Photos)", 0, 78, 1009.75],
+        ["Sept. 11, 2026", "Cartolina Purchase (9 pcs @ ₱7)", 0, 63, 946.75],
+        ["Sept. 14, 2026", "Birthday Banner", 0, 18, 928.75],
+        ["Sept. 16, 2026", "Cleaning Brushes (50 pcs @ ₱6)", 0, 300, 628.75],
+        ["Sept. 24, 2026", "Sales of Merch (Button Pins - 14 pcs @ ₱20)", 280, 0, 908.75]
+      ]
+    }
+  ]
 };
