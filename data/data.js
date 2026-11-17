@@ -40,12 +40,10 @@ function shots(name, max) {
 const EVENTS = [
   {
     id: "freshmen-day", title: "BSIT Freshmen Day", date: "TBA", status: "upcoming",
-    photos: shots("freshmen-day", 12),
     description: "A welcome event for the incoming BSIT students, where the Alliance introduces its officers, activities, and the BSIT community."
   },
   {
     id: "membership-drive", title: "Alliance Membership Drive", date: "April 2027", status: "upcoming",
-    photos: shots("membership-drive", 12),
     description: "The yearly drive that invites BSIT students to officially join the Alliance and take part in its projects."
   },
   {
@@ -69,9 +67,7 @@ const EVENTS = [
    file: the PDF inside the letters/ folder (lowercase, no spaces, like letters/mlbb-approval.pdf)
    Delete any line whose PDF you haven't added yet. */
 const LETTERS = [
-  { title: "Approval Letter: 17th Founding Anniversary: Mobile Legends Tournament",        date: "2026", file: "letters/mlbb-approval.pdf" },
-  { title: "Approval Letter: BSIT Official Departmental Shirt",           date: "2026", file: "letters/bsit-official-dept-shirt-approval.pdf" },
-  { title: "Approval Letter: Balik Sinta 2026 Exhibit",         date: "2026", file: "letters/balik-sinta-exhibit-approval.pdf" }
+  { title: "Approval Letter: BSIT Official Departmental Shirt",           date: "2026", file: "letters/bsit-official-dept-shirt-approval.pdf" }
 ];
 
 /* ---------- ANNOUNCEMENTS (newest first) ---------- */
