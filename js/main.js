@@ -35,7 +35,6 @@
     if (o.photo) {
       var img = new Image();
       img.alt = "Photo of " + o.name;
-      img.loading = "lazy";
       img.onload = function () { fallback.remove(); frame.appendChild(img); };
       img.src = o.photo;
     }
