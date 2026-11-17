@@ -462,3 +462,45 @@
     }
   }
 })();
+
+/* ===== Funds report (appended) ===== */
+(function () {
+  "use strict";
+  var box = document.getElementById("funds-report");
+  if (!box || typeof REPORT === "undefined") return;
+  function el(tag, cls, text) { var n = document.createElement(tag); if (cls) n.className = cls; if (text !== undefined) n.textContent = text; return n; }
+  function peso(n) { return "₱" + Number(n).toLocaleString("en-PH", { minimumFractionDigits: 2, maximumFractionDigits: 2 }); }
+  function cell(tag, text, cls) { return el(tag, cls || "", text); }
+  function row(cells, cls) { var r = el("tr", cls || ""); cells.forEach(function (c) { r.appendChild(c); }); return r; }
+
+  var left = el("div"), right = el("aside", "running");
+
+  REPORT.sections.forEach(function (s, k) {
+    var d = el("details", "rsec"), sum = el("summary"), last = s.rows[s.rows.length - 1][4];
+    if (k === REPORT.sections.length - 1) d.open = true;
+    sum.appendChild(el("span", "", s.title));
+    sum.appendChild(el("span", "re", "Ending balance: " + peso(last)));
+    var scroll = el("div", "tscroll"), t = el("table", "rtable"), th = el("thead"), tb = el("tbody");
+    th.appendChild(row(["Date", "Description", "Income", "Expenses", "Balance"].map(function (h, i) { return cell("th", h, i > 1 ? "n" : ""); })));
+    s.rows.forEach(function (r) {
+      tb.appendChild(row([
+        cell("td", r[0]), cell("td", r[1]),
+        cell("td", r[2] ? peso(r[2]) : "", "n" + (r[2] ? " inc" : "")),
+        cell("td", r[3] ? peso(r[3]) : "", "n" + (r[3] ? " exp" : "")),
+        cell("td", peso(r[4]), "n")
+      ]));
+    });
+    t.appendChild(th); t.appendChild(tb); scroll.appendChild(t); d.appendChild(sum); d.appendChild(scroll); left.appendChild(d);
+  });
+
+  right.appendChild(el("h3", "", "Running Balance (As of " + REPORT.asOf + ")"));
+  var rs = el("div", "tscroll"), rt = el("table", "rtable"), rh = el("thead"), rb = el("tbody");
+  rh.appendChild(row([cell("th", "Category"), cell("th", "Amount", "n"), cell("th", "Notes")]));
+  REPORT.running.forEach(function (r) {
+    var note = cell("td", ""); note.appendChild(el("small", "", r.note));
+    rb.appendChild(row([cell("td", r.category), cell("td", peso(r.amount), "n"), note], r.highlight ? "hl" : ""));
+  });
+  rt.appendChild(rh); rt.appendChild(rb); rs.appendChild(rt); right.appendChild(rs);
+
+  box.appendChild(left); box.appendChild(right);
+})();
