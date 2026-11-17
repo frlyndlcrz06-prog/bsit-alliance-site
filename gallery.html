@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Gallery | PUPC BSIT Alliance</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Sora:wght@600;700;800&family=Source+Sans+3:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <header class="topbar" id="site-header"></header>
+  <main>
+    <section class="page-hero">
+      <div class="wrap">
+        <h1>Gallery</h1>
+        <p>Every moment from our events in one place. Click a photo to enlarge it.</p>
+      </div>
+    </section>
+    <section class="section wrap">
+      <div class="tabs" id="gallery-tabs" role="group" aria-label="Filter photos by event"></div>
+      <div class="photo-grid" id="gallery-grid"></div>
+    </section>
+  </main>
+
+  <div class="lightbox" id="lightbox" hidden>
+    <button id="lb-close" aria-label="Close">&times;</button>
+    <button id="lb-prev" aria-label="Previous photo">&#8249;</button>
+    <img id="lb-img" alt="">
+    <button id="lb-next" aria-label="Next photo">&#8250;</button>
+  </div>
+
+  <footer class="footer" id="site-footer"></footer>
+  <script src="data/data.js"></script>
+  <script src="js/main.js"></script>
+</body>
+</html>
