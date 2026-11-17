@@ -314,3 +314,151 @@
     window.addEventListener("pageshow", function () { document.body.classList.remove("leaving"); });
   }
 })();
+
+/* ===== Round 1 features (appended) ===== */
+(function () {
+  "use strict";
+  var calm = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  var $ = function (id) { return document.getElementById(id); };
+  function el(tag, cls, text) { var n = document.createElement(tag); if (cls) n.className = cls; if (text !== undefined) n.textContent = text; return n; }
+  function watch(box, fn) { if (!box) return; new MutationObserver(fn).observe(box, { childList: true }); fn(); }
+  function lockScroll(on) { document.body.style.overflow = on ? "hidden" : ""; }
+  function popup(html) { var m = el("div", "modal"); m.hidden = true; m.innerHTML = html; document.body.appendChild(m); return m; }
+
+  /* 1. Logo (images/logo.png) + dark mode button in the header */
+  var brand = document.querySelector(".brand");
+  if (brand) { var lg = new Image(); lg.alt = ""; lg.onload = function () { brand.insertBefore(lg, brand.firstChild); }; lg.src = "images/logo.png"; }
+  var nav = document.querySelector(".topbar nav");
+  if (nav) {
+    var saved = null; try { saved = localStorage.getItem("bsit-theme"); } catch (e) {}
+    var tb = el("button", "theme-btn");
+    var setTheme = function (t) {
+      document.documentElement.setAttribute("data-theme", t);
+      tb.textContent = t === "dark" ? "☀" : "☾";
+      tb.setAttribute("aria-label", t === "dark" ? "Switch to light mode" : "Switch to dark mode");
+    };
+    setTheme(saved === "dark" ? "dark" : "light");
+    tb.addEventListener("click", function () {
+      var t = document.documentElement.getAttribute("data-theme") === "dark" ? "light" : "dark";
+      setTheme(t); try { localStorage.setItem("bsit-theme", t); } catch (e) {}
+    });
+    nav.appendChild(tb);
+  }
+
+  /* 2. Home: photo slideshow behind the hero (uses your event photos 1 and 2) */
+  var hero = $("hero");
+  if (hero) {
+    var layer = el("div", "slides"); layer.setAttribute("aria-hidden", "true"); hero.insertBefore(layer, hero.firstChild);
+    var urls = [], good = {}, waiting;
+    EVENTS.forEach(function (e) { (e.photos || []).slice(0, 2).forEach(function (p) { urls.push(p); }); });
+    waiting = urls.length;
+    var build = function () {
+      var list = urls.filter(function (u) { return good[u]; }).slice(0, 6);
+      if (!list.length) return;
+      var slides = list.map(function (u) { var s = el("div", "slide"); s.style.backgroundImage = "url('" + u + "')"; layer.appendChild(s); return s; });
+      var n = 0; slides[0].classList.add("on");
+      if (calm || slides.length < 2) return;
+      setInterval(function () { slides[n].classList.remove("on"); n = (n + 1) % slides.length; slides[n].classList.add("on"); }, 5500);
+    };
+    urls.forEach(function (u) {
+      var im = new Image();
+      im.onload = function () { good[u] = true; if (!--waiting) build(); };
+      im.onerror = function () { if (!--waiting) build(); };
+      im.src = u;
+    });
+  }
+
+  /* 3. Home: stats strip with count-up */
+  var offSec = $("officers");
+  if (hero && offSec) {
+    var band = el("section", "stats-band"), sw = el("div", "wrap stats");
+    [[OFFICERS.length, "Officers"], [EVENTS.length, "Events"], [LETTERS.length, "Approval letters"]].forEach(function (s) {
+      var box = el("div", "stat"), num = el("strong", "", calm ? String(s[0]) : "0");
+      num.setAttribute("data-to", s[0]); box.appendChild(num); box.appendChild(el("span", "", s[1])); sw.appendChild(box);
+    });
+    band.appendChild(sw); offSec.parentNode.insertBefore(band, offSec);
+    if (!calm) new IntersectionObserver(function (items, o) {
+      items.forEach(function (it) {
+        if (!it.isIntersecting) return; o.disconnect();
+        var t0 = performance.now();
+        (function step(t) {
+          var p = Math.min(1, (t - t0) / 1200);
+          Array.prototype.forEach.call(sw.querySelectorAll("strong"), function (n) { n.textContent = Math.round(n.getAttribute("data-to") * p); });
+          if (p < 1) requestAnimationFrame(step);
+        })(t0);
+      });
+    }, { threshold: 0.5 }).observe(sw);
+  }
+
+  /* 4. Officer profile pop-up (click an officer card) */
+  var pop = popup('<div class="modal-box" role="dialog" aria-modal="true" aria-labelledby="pf-name"><button class="modal-close" aria-label="Close">&times;</button><div class="profile"><div class="profile-photo" id="pf-photo"></div><div class="profile-info"><span class="pill" id="pf-year"></span><h3 id="pf-name"></h3><span class="role" id="pf-role"></span><blockquote id="pf-quote"></blockquote></div></div></div>');
+  var opener = null;
+  var popClose = function () { pop.hidden = true; lockScroll(false); if (opener) opener.focus(); };
+  pop.querySelector(".modal-close").addEventListener("click", popClose);
+  pop.addEventListener("click", function (e) { if (e.target === pop) popClose(); });
+  var og = $("officer-grid");
+  if (og) Array.prototype.forEach.call(og.children, function (f, i) {
+    var o = OFFICERS[i];
+    f.tabIndex = 0; f.setAttribute("role", "button"); f.setAttribute("aria-label", "View profile of " + o.name);
+    var open = function () {
+      var ph = $("pf-photo"), src = f.querySelector("img"); ph.textContent = "";
+      if (src) { var big = new Image(); big.alt = o.name; big.src = src.src; ph.appendChild(big); }
+      else ph.appendChild(el("span", "officer-initials", o.name.split(/\s+/).slice(0, 2).map(function (w) { return w[0]; }).join("")));
+      $("pf-name").textContent = o.name; $("pf-role").textContent = o.position;
+      var yr = $("pf-year"); yr.textContent = o.year || ""; yr.hidden = !o.year;
+      var q = $("pf-quote"); q.textContent = o.quote ? "“" + o.quote + "”" : ""; q.hidden = !o.quote;
+      opener = f; pop.hidden = false; lockScroll(true); pop.querySelector(".modal-close").focus();
+    };
+    f.addEventListener("click", open);
+    f.addEventListener("keydown", function (e) { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); open(); } });
+  });
+
+  /* 5. Approval letters: in-page PDF preview */
+  var pdf = popup('<div class="modal-box pdf-box" role="dialog" aria-modal="true" aria-labelledby="pdf-title"><button class="modal-close" aria-label="Close">&times;</button><div class="pdf-head"><h3 id="pdf-title"></h3><a class="btn small fill" id="pdf-open" target="_blank" rel="noopener">Open in new tab</a><a class="btn small" id="pdf-dl" download>Download</a></div><iframe class="pdf-frame" id="pdf-frame" title="Approval letter preview"></iframe><p class="pdf-note">If the preview does not load on your phone, use Open in new tab or Download.</p></div>');
+  var pdfOpener = null;
+  var pdfClose = function () { pdf.hidden = true; $("pdf-frame").src = "about:blank"; lockScroll(false); if (pdfOpener) pdfOpener.focus(); };
+  pdf.querySelector(".modal-close").addEventListener("click", pdfClose);
+  pdf.addEventListener("click", function (e) { if (e.target === pdf) pdfClose(); });
+  var ll = $("letter-list");
+  watch(ll, function () {
+    Array.prototype.forEach.call(ll.querySelectorAll(".letter:not([data-pv])"), function (row) {
+      row.setAttribute("data-pv", "1");
+      var view = row.querySelector("a.fill"), acts = row.querySelector(".letter-actions");
+      if (!view || !acts) return;
+      var b = el("button", "btn small", "Preview"); b.type = "button"; acts.insertBefore(b, view);
+      b.addEventListener("click", function () {
+        var href = view.getAttribute("href");
+        $("pdf-title").textContent = row.querySelector("h3").textContent;
+        $("pdf-open").href = href; $("pdf-dl").href = href; $("pdf-frame").src = href;
+        pdfOpener = b; pdf.hidden = false; lockScroll(true); pdf.querySelector(".modal-close").focus();
+      });
+    });
+  });
+
+  document.addEventListener("keydown", function (e) {
+    if (e.key !== "Escape") return;
+    if (!pop.hidden) popClose();
+    if (!pdf.hidden) pdfClose();
+  });
+
+  /* 6. Events page: countdown to the next upcoming event that has a "when" date */
+  var eg = $("event-grid");
+  if (eg) {
+    var upNext = EVENTS.filter(function (e) { return e.when && new Date(e.when).getTime() > Date.now(); })
+      .sort(function (a, b) { return new Date(a.when) - new Date(b.when); })[0];
+    if (upNext) {
+      var cd = el("a", "next-up"); cd.href = "event.html?id=" + encodeURIComponent(upNext.id);
+      var txt = el("div"); txt.appendChild(el("small", "", "Next up")); txt.appendChild(el("strong", "", upNext.title));
+      var clock = el("div", "clock"); cd.appendChild(txt); cd.appendChild(clock);
+      eg.parentNode.insertBefore(cd, eg.parentNode.querySelector(".tabs"));
+      var tick = function () {
+        var s = Math.max(0, Math.floor((new Date(upNext.when) - Date.now()) / 1000));
+        clock.textContent = "";
+        [[Math.floor(s / 86400), "days"], [Math.floor(s % 86400 / 3600), "hrs"], [Math.floor(s % 3600 / 60), "min"], [s % 60, "sec"]].forEach(function (p) {
+          var b = el("b"); b.appendChild(document.createTextNode(String(p[0]).padStart(2, "0"))); b.appendChild(el("em", "", p[1])); clock.appendChild(b);
+        });
+      };
+      tick(); setInterval(tick, 1000);
+    }
+  }
+})();
