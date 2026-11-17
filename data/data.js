@@ -14,11 +14,11 @@ const OFFICERS = [
   { name: "Glayza Malan", position: "Secretary",       photo: "photos/secretary.jpg" },
   { name: "Rose Gelyn Guilleno", position: "Treasurer",       photo: "photos/treasurer.jpg" },
   { name: "Glyza Aleah Tolentino", position: "Auditor",         photo: "photos/auditor.jpg" },
-  { name: "Gieshan Alcantara", position: "1st Year Representative", photo: "photos/1styr-rep.jpg" }
-  { name: "Ariane Nicole Acedera", position: "1st Year Representative", photo: "photos/1styr-repp.jpg" }
-  { name: "Crystelle Joy Brezuela", position: "2nd Year Representative", photo: "photos/2ndyr-rep.jpg" }
-  { name: "Eury Dausin", position: "2nd Year Representative", photo: "photos/2ndyr-repp.jpg" }
-  { name: "Kyle Lowell Pronto", position: "3rd Year Representative", photo: "photos/3rdyr-rep.jpg" }
+  { name: "Gieshan Alcantara", position: "1st Year Representative", photo: "photos/1styr-rep.jpg" },
+  { name: "Ariane Nicole Acedera", position: "1st Year Representative", photo: "photos/1styr-repp.jpg" },
+  { name: "Crystelle Joy Brezuela", position: "2nd Year Representative", photo: "photos/2ndyr-rep.jpg" },
+  { name: "Eury Dausin", position: "2nd Year Representative", photo: "photos/2ndyr-repp.jpg" },
+  { name: "Kyle Lowell Pronto", position: "3rd Year Representative", photo: "photos/3rdyr-rep.jpg" },
   { name: "Neil Clarence Montana", position: "4th Year Representative", photo: "photos/4thyr-rep.jpg" }
 ];
 
