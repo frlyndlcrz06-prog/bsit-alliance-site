@@ -38,6 +38,6 @@ const ANNOUNCEMENTS = [
 /* ---------- FUNDS (summary only, this site is public) ---------- */
 const FUNDS = {
   asOf: "November 2026",
-  collected: 0,
-  spent: 0
+  collected: 9070,
+  spent: 8161.25
 };
