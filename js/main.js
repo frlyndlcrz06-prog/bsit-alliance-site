@@ -504,3 +504,184 @@
 
   box.appendChild(left); box.appendChild(right);
 })();
+
+/* ===== Round 2 features (appended) ===== */
+(function () {
+  "use strict";
+  var calm = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  var $ = function (id) { return document.getElementById(id); };
+  function el(tag, cls, text) { var n = document.createElement(tag); if (cls) n.className = cls; if (text !== undefined) n.textContent = text; return n; }
+  function peso(n) { return "₱" + Number(n).toLocaleString("en-PH", { minimumFractionDigits: 2, maximumFractionDigits: 2 }); }
+  function onView(node, fn, t) { new IntersectionObserver(function (items, o) { if (items[0].isIntersecting) { o.disconnect(); fn(); } }, { threshold: t || 0.25 }).observe(node); }
+
+  /* 1. Loading screen (once per visit) */
+  var loaded = false; try { loaded = sessionStorage.getItem("bsit-loaded") === "1"; } catch (e) {}
+  if (!loaded && !calm) {
+    var ld = el("div"); ld.id = "loader";
+    ld.appendChild(el("span", "", "PUPC BSIT Alliance"));
+    var lbar = el("div", "ld-bar"); lbar.appendChild(el("i")); ld.appendChild(lbar);
+    var lg = new Image(); lg.alt = ""; lg.onload = function () { ld.insertBefore(lg, ld.firstChild); }; lg.src = "images/logo.png";
+    document.body.appendChild(ld);
+    var t0 = Date.now();
+    var hide = function () { setTimeout(function () { ld.classList.add("done"); setTimeout(function () { ld.remove(); }, 600); }, Math.max(0, 800 - (Date.now() - t0))); };
+    if (document.readyState === "complete") hide(); else window.addEventListener("load", hide);
+    try { sessionStorage.setItem("bsit-loaded", "1"); } catch (e) {}
+  }
+
+  /* 2. Gallery link in the header */
+  var nav = document.querySelector(".topbar nav");
+  if (nav) {
+    var gl = el("a", location.pathname.split("/").pop() === "gallery.html" ? "on" : "", "Gallery"); gl.href = "gallery.html";
+    nav.insertBefore(gl, nav.querySelector('a[href="letters.html"]'));
+  }
+
+  /* 3. Home: scrolling motto strip under the stats */
+  var band = document.querySelector(".stats-band");
+  if (band) {
+    var mq = el("div", "marquee"), tr = el("div", "m-track"), line = MOTTO.join("  •  ") + "  •  ";
+    mq.setAttribute("aria-hidden", "true"); tr.textContent = new Array(13).join(line);
+    mq.appendChild(tr); band.parentNode.insertBefore(mq, band.nextSibling);
+  }
+
+  /* 4. Announcements: tags and New badge (add tag / isNew in data.js) */
+  var al = $("announcement-list");
+  if (al) Array.prototype.forEach.call(al.querySelectorAll(".announcement"), function (n, i) {
+    var a = ANNOUNCEMENTS[i]; if (!a) return;
+    var top = el("div", "a-top");
+    if (a.tag) top.appendChild(el("span", "tag t-" + a.tag.toLowerCase(), a.tag));
+    if (a.isNew) top.appendChild(el("span", "badge-new", "New"));
+    if (top.children.length) n.insertBefore(top, n.firstChild);
+  });
+
+  /* 5. Events page: featured carousel + timeline */
+  var eb = $("event-grid");
+  if (eb) {
+    var okIds = [], todo = EVENTS.length;
+    var buildFeature = function () {
+      var list = EVENTS.filter(function (e) { return okIds.indexOf(e.id) > -1; });
+      if (!list.length) return;
+      var feat = el("div", "feature"), dots = el("div", "fdots"), cur = 0, timer = null, ds = [];
+      var slides = list.map(function (e, i) {
+        var s = el("a", "fslide"); s.href = "event.html?id=" + encodeURIComponent(e.id); s.style.backgroundImage = "url('" + e.photos[0] + "')";
+        var t = el("div", "ftext"); t.appendChild(el("span", "pill " + e.status, e.status === "upcoming" ? "Upcoming" : "Past"));
+        t.appendChild(el("h3", "", e.title)); if (e.date) t.appendChild(el("p", "", e.date)); t.appendChild(el("span", "btn primary", "View event"));
+        s.appendChild(t); feat.appendChild(s);
+        var d = el("button", "fdot"); d.type = "button"; d.setAttribute("aria-label", "Show " + e.title);
+        d.addEventListener("click", function () { show(i); }); dots.appendChild(d); ds.push(d);
+        return s;
+      });
+      var show = function (i) {
+        slides[cur].classList.remove("on"); ds[cur].classList.remove("on");
+        cur = (i + slides.length) % slides.length; slides[cur].classList.add("on"); ds[cur].classList.add("on");
+      };
+      show(0);
+      if (slides.length > 1) {
+        var pv = el("button", "fnav fprev", "‹"), nx = el("button", "fnav fnext", "›");
+        pv.type = nx.type = "button"; pv.setAttribute("aria-label", "Previous event"); nx.setAttribute("aria-label", "Next event");
+        pv.addEventListener("click", function () { show(cur - 1); }); nx.addEventListener("click", function () { show(cur + 1); });
+        feat.appendChild(pv); feat.appendChild(nx); feat.appendChild(dots);
+        var start = function () { if (!calm) timer = setInterval(function () { show(cur + 1); }, 5500); };
+        feat.addEventListener("mouseenter", function () { clearInterval(timer); }); feat.addEventListener("mouseleave", start); start();
+      }
+      eb.parentNode.insertBefore(feat, eb.parentNode.firstChild);
+    };
+    EVENTS.forEach(function (e) {
+      var im = new Image();
+      im.onload = function () { okIds.push(e.id); if (!--todo) buildFeature(); };
+      im.onerror = function () { if (!--todo) buildFeature(); };
+      im.src = e.photos[0];
+    });
+
+    var host = eb.closest("section"), tls = el("section", "section wrap"), ol = el("ol", "timeline");
+    tls.appendChild(el("h2", "", "Timeline"));
+    EVENTS.forEach(function (e) {
+      var li = el("li"), a = el("a", "tl-card"); a.href = "event.html?id=" + encodeURIComponent(e.id);
+      if (e.date) a.appendChild(el("time", "", e.date)); a.appendChild(el("h3", "", e.title));
+      a.appendChild(el("span", "pill " + e.status, e.status === "upcoming" ? "Upcoming" : "Past")); li.appendChild(a); ol.appendChild(li);
+      onView(li, function () { li.classList.add("in"); }, 0.2);
+    });
+    tls.appendChild(ol); host.parentNode.insertBefore(tls, host.nextSibling);
+  }
+
+  /* 6. Gallery page */
+  var gg = $("gallery-grid");
+  if (gg) {
+    var lb = $("lightbox"), vis = [], gi = 0, tabs = $("gallery-tabs");
+    var lset = function () { $("lb-img").src = vis[gi].src; $("lb-img").alt = vis[gi].alt; };
+    var lopen = function (img) {
+      vis = Array.prototype.filter.call(gg.querySelectorAll(".shot"), function (b) { return !b.hidden; }).map(function (b) { return b.querySelector("img"); });
+      gi = vis.indexOf(img); lset(); lb.hidden = false; document.body.style.overflow = "hidden"; $("lb-close").focus();
+    };
+    var lclose = function () { lb.hidden = true; document.body.style.overflow = ""; };
+    var lstep = function (d) { gi = (gi + d + vis.length) % vis.length; lset(); };
+    EVENTS.forEach(function (e) {
+      (e.photos || []).forEach(function (src, i) {
+        var b = el("button", "shot"), im = new Image();
+        im.alt = e.title + " photo " + (i + 1); im.onerror = function () { b.remove(); }; im.src = src;
+        b.setAttribute("data-ev", e.id); b.appendChild(im); b.appendChild(el("span", "cap", e.title));
+        b.addEventListener("click", function () { lopen(im); }); gg.appendChild(b);
+      });
+    });
+    [["all", "All"]].concat(EVENTS.map(function (e) { return [e.id, e.title]; })).forEach(function (p, k) {
+      var t = el("button", "tab" + (k ? "" : " on"), p[1]);
+      t.addEventListener("click", function () {
+        Array.prototype.forEach.call(tabs.children, function (x) { x.classList.toggle("on", x === t); });
+        Array.prototype.forEach.call(gg.querySelectorAll(".shot"), function (b) { b.hidden = p[0] !== "all" && b.getAttribute("data-ev") !== p[0]; });
+      });
+      tabs.appendChild(t);
+    });
+    $("lb-close").addEventListener("click", lclose);
+    $("lb-prev").addEventListener("click", function () { lstep(-1); });
+    $("lb-next").addEventListener("click", function () { lstep(1); });
+    lb.addEventListener("click", function (e) { if (e.target === lb) lclose(); });
+    document.addEventListener("keydown", function (e) {
+      if (lb.hidden) return;
+      if (e.key === "Escape") lclose(); if (e.key === "ArrowRight") lstep(1); if (e.key === "ArrowLeft") lstep(-1);
+    });
+  }
+
+  /* 7. Funds page: donut + income/expense bars from REPORT */
+  var fr = $("funds-report");
+  if (fr && typeof REPORT !== "undefined") {
+    var cols = ["#7b1e2e", "#e0a92a", "#1f3a5f", "#2e8b78"];
+    var parts = REPORT.sections.map(function (s, i) {
+      var inc = 0, exp = 0; s.rows.forEach(function (r) { inc += r[2]; exp += r[3]; });
+      return { t: s.title, inc: inc, exp: exp, c: cols[i % cols.length] };
+    });
+    var totalExp = parts.reduce(function (a, p) { return a + p.exp; }, 0) || 1;
+    var maxV = Math.max.apply(null, parts.map(function (p) { return Math.max(p.inc, p.exp); })) || 1;
+    var C = 2 * Math.PI * 52, off = 0, segs = "";
+    parts.forEach(function (p) {
+      var len = C * p.exp / totalExp;
+      segs += '<circle class="seg" data-len="' + len + '" cx="60" cy="60" r="52" stroke="' + p.c + '" stroke-dasharray="0 ' + C + '" stroke-dashoffset="-' + off + '"/>';
+      off += len;
+    });
+    var sec = el("section", "section wrap reveal in"), box = el("div", "charts"), c1 = el("div", "ch-card"), c2 = el("div", "ch-card");
+    sec.appendChild(el("h2", "", "Where the money went"));
+    c1.appendChild(el("h3", "", "Spending by activity"));
+    var dn = el("div", "dn-box");
+    dn.innerHTML = '<svg class="donut" viewBox="0 0 120 120" aria-hidden="true"><circle cx="60" cy="60" r="52" stroke="#d9d5de"/>' + segs + '</svg><div class="dn-text"><strong></strong><span>total spent</span></div>';
+    dn.querySelector("strong").textContent = peso(totalExp); c1.appendChild(dn);
+    var lg2 = el("ul", "legend");
+    parts.forEach(function (p) {
+      var li = el("li"), sw = el("i"); sw.style.background = p.c; li.appendChild(sw); li.appendChild(el("span", "", p.t));
+      li.appendChild(el("b", "", peso(p.exp) + " (" + Math.round(p.exp / totalExp * 100) + "%)")); lg2.appendChild(li);
+    });
+    c1.appendChild(lg2);
+    c2.appendChild(el("h3", "", "Income vs. expenses"));
+    parts.forEach(function (p) {
+      var row = el("div", "ch-row"); row.appendChild(el("p", "", p.t));
+      [["g", p.inc, "Income"], ["r", p.exp, "Expenses"]].forEach(function (b) {
+        var t = el("div", "trk"), tr2 = el("div"), bar = el("i", b[0]); bar.setAttribute("data-w", (b[1] / maxV * 100).toFixed(1));
+        tr2.appendChild(bar); t.appendChild(tr2); t.appendChild(el("span", "", b[2] + " " + peso(b[1]))); row.appendChild(t);
+      });
+      c2.appendChild(row);
+    });
+    box.appendChild(c1); box.appendChild(c2); sec.appendChild(box);
+    var target = fr.closest("section"); target.parentNode.insertBefore(sec, target);
+    onView(box, function () {
+      Array.prototype.forEach.call(box.querySelectorAll(".seg"), function (s) { s.setAttribute("stroke-dasharray", s.getAttribute("data-len") + " " + C); });
+      Array.prototype.forEach.call(box.querySelectorAll(".trk i"), function (b) { b.style.width = b.getAttribute("data-w") + "%"; });
+    }, 0.3);
+  }
+})();
