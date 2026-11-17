@@ -22,12 +22,37 @@ const OFFICERS = [
   { name: "Neil Clarence Montana", position: "4th Year Representative", photo: "photos/4thyr-rep.jpg" }
 ];
 
+/* ---------- MOTTO (shown on the landing page) ---------- */
+const MOTTO = ["EXCELLENCE", "INNOVATION", "INTEGRITY"];
+
 /* ---------- EVENTS ----------
-   status: "upcoming" or "done"     date: any text, like "November 16, 2026" */
+   status: "upcoming" or "done"     date: any text
+   photos: 2 to 3 files inside photos/events/  (missing photos show a colored placeholder)
+   description: shown when a visitor clicks the event. Edit these to match the real event. */
 const EVENTS = [
-  { title: "BSIT Freshmen Day",                 date: "TBA", status: "upcoming" },
-  { title: "Balik Sinta 2026: BSIT Alliance Booth",   date: "", status: "done" },
-  { title: "Balik Sinta 2026: BSIT Exhibit",          date: "", status: "done" }
+  {
+    title: "BSIT Freshmen Day", date: "TBA", status: "upcoming",
+    description: "A welcome event for the incoming BSIT students, where the Alliance introduces its officers, activities, and the BSIT community."
+  },
+  {
+    title: "Alliance Membership Drive", date: "April 2027", status: "upcoming",
+    description: "A drive that invites BSIT students to officially join the Alliance and take part in its projects."
+  },
+  {
+    title: "17th Founding Anniversary: Mobile Legends Tournament", date: "June 2026", status: "done",
+    photos: ["photos/events/mlbb-1.jpg", "photos/events/mlbb-2.jpg", "photos/events/mlbb-3.jpg"],
+    description: "An esports tournament held for the PUP Calauan Campus' 17th Founding Anniversary, where teams from all programs of PUPC community competed in Mobile Legends."
+  },
+  {
+    title: "Balik Sinta 2026: BSIT Alliance Booth", date: "August 25, 2026", status: "done",
+    photos: ["photos/events/balik-sinta-booth-1.jpg", "photos/events/balik-sinta-booth-2.jpg", "photos/events/balik-sinta-booth-3.jpg"],
+    description: "The Alliance's booth during Balik Sinta 2026, where officers and members met students and shared what BSIT Alliance is about."
+  },
+  {
+    title: "Balik Sinta 2026: BSIT Exhibit", date: "2026", status: "done",
+    photos: ["photos/events/balik-sinta-exhibit-1.jpg", "photos/events/balik-sinta-exhibit-2.jpg"],
+    description: "The BSIT exhibit at Balik Sinta 2026, showcasing the projects and work of BSIT students."
+  }
 ];
 
 /* ---------- ANNOUNCEMENTS (newest first) ---------- */
