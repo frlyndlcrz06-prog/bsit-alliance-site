@@ -39,11 +39,11 @@ function shots(name, max) {
 
 const EVENTS = [
   {
-    id: "freshmen-day", title: "BSIT Freshmen Day", date: "TBA", status: "upcoming",
+    id: "freshmen-day", title: "BSIT Freshmen Day", date: "November 24, 2026", when: "2026-11-24T08:00", status: "upcoming",
     description: "A welcome event for the incoming BSIT students, where the Alliance introduces its officers, activities, and the BSIT community."
   },
   {
-    id: "membership-drive", title: "Alliance Membership Drive", date: "April 2027", status: "upcoming",
+    id: "membership-drive", title: "Alliance Membership Drive", date: "April 2027", when: "2027-04-10T08:00", status: "upcoming",
     description: "The yearly drive that invites BSIT students to officially join the Alliance and take part in its projects."
   },
   {
