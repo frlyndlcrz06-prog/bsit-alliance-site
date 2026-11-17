@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Events | PUPC BSIT Alliance</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Sora:wght@600;700;800&family=Source+Sans+3:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <header class="topbar" id="site-header"></header>
+  <main>
+    <section class="page-hero">
+      <div class="wrap">
+        <h1>Events</h1>
+        <p>Click an event to see all of its photos and a summary.</p>
+      </div>
+    </section>
+    <section class="section band">
+      <div class="wrap reveal">
+        <div class="tabs" role="group" aria-label="Filter events">
+          <button class="tab on" data-filter="all">All</button>
+          <button class="tab" data-filter="upcoming">Upcoming</button>
+          <button class="tab" data-filter="done">Past</button>
+        </div>
+        <div id="event-grid" class="event-grid"></div>
+      </div>
+    </section>
+  </main>
+  <footer class="footer" id="site-footer"></footer>
+  <script src="data/data.js"></script>
+  <script src="js/main.js"></script>
+</body>
+</html>
