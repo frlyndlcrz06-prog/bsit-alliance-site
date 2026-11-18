@@ -788,7 +788,8 @@
 
   /* 1. Landing page: announcements right under the hero */
   var heroEl = $("hero"), ann = $("announcements");
-  if (heroEl && ann) heroEl.parentNode.insertBefore(ann, heroEl.nextSibling);
+    var strip = document.querySelector(".marquee");
+    if (heroEl && ann) (strip || heroEl).parentNode.insertBefore(ann, (strip || heroEl).nextSibling);
 
   /* 2. Facebook: replace the embedded feed with the follow card + your own post cards */
   var hold = document.querySelector(".fb-hold"); if (hold) hold.remove();
