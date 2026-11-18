@@ -72,7 +72,22 @@ const LETTERS = [
 
 /* ---------- ANNOUNCEMENTS (newest first) ---------- */
 const ANNOUNCEMENTS = [
-  { title: "Welcome to the new Alliance website", date: "November 2026", tag: "Notice", isNew: true, body: "Announcements, events, and officer updates will be posted here." }
+  {
+    title: "BSIT Freshmen Day is coming soon", date: "November 2026", tag: "Event", isNew: true,
+    body: "Details for BSIT Freshmen Day will be posted here as soon as the date is final. Watch this page and our Facebook page for updates."
+  },
+  {
+    title: "Approval letters are now on the website", date: "November 2026", tag: "Notice",
+    body: "You can now preview and download the approval letters for our activities. Open the sidebar menu and choose Approval Letters."
+  },
+  {
+    title: "Alliance Membership Drive in April 2027", date: "November 2026", tag: "Reminder", isNew: true,
+    body: "Get ready to join the Alliance! The membership drive opens in April 2027, and more details will be announced closer to the date."
+  },
+  {
+    title: "Have a question or concern?", date: "November 2026", tag: "Notice",
+    body: "Send us an email at pupcc.bsitalliance@gmail.com, and an officer will get back to you."
+  }
 ];
 
 /* ---------- FUNDS (summary only, this site is public) ---------- */
