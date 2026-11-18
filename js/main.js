@@ -714,3 +714,72 @@
     hold.appendChild(f);
   }, { rootMargin: "200px" }).observe(sec);
 })();
+
+/* ===== Round 4 (appended) ===== */
+(function () {
+  "use strict";
+  var $ = function (id) { return document.getElementById(id); };
+  function el(tag, cls, text) { var n = document.createElement(tag); if (cls) n.className = cls; if (text !== undefined) n.textContent = text; return n; }
+
+  /* 1. Side menu: menu button opens a drawer with the page links */
+  var top = document.querySelector(".topbar"), nav = top && top.querySelector("nav");
+  if (top && nav) {
+    var btn = el("button", "menu-btn"); btn.type = "button";
+    btn.setAttribute("aria-label", "Open menu"); btn.setAttribute("aria-expanded", "false"); btn.setAttribute("aria-controls", "drawer");
+    btn.innerHTML = "<span></span><span></span><span></span>";
+    top.insertBefore(btn, top.firstChild);
+
+    var theme = top.querySelector(".theme-btn") || nav.querySelector(".theme-btn");
+    if (theme) top.appendChild(theme);
+
+    nav.id = "drawer"; nav.className = "drawer"; document.body.appendChild(nav);
+    var head = el("div", "drawer-head"), x = el("button", "drawer-x", "×");
+    x.type = "button"; x.setAttribute("aria-label", "Close menu");
+    head.appendChild(el("strong", "", "Menu")); head.appendChild(x); nav.insertBefore(head, nav.firstChild);
+    var scrim = el("div", "scrim"); document.body.appendChild(scrim);
+
+    var setOpen = function (open) {
+      document.body.classList.toggle("menu-open", open);
+      btn.setAttribute("aria-expanded", String(open));
+      btn.setAttribute("aria-label", open ? "Close menu" : "Open menu");
+      document.body.style.overflow = open ? "hidden" : "";
+      if (open) (nav.querySelector("a") || x).focus(); else btn.focus();
+    };
+    btn.addEventListener("click", function () { setOpen(!document.body.classList.contains("menu-open")); });
+    x.addEventListener("click", function () { setOpen(false); });
+    scrim.addEventListener("click", function () { setOpen(false); });
+    document.addEventListener("keydown", function (e) { if (e.key === "Escape" && document.body.classList.contains("menu-open")) setOpen(false); });
+  }
+
+  /* 2. About Us: preamble, objectives, and contact (text comes from data.js) */
+  var at = $("about-text");
+  if (at && typeof ABOUT !== "undefined") {
+    var seen = new IntersectionObserver(function (items) {
+      items.forEach(function (it) { if (it.isIntersecting) { it.target.classList.add("in"); seen.unobserve(it.target); } });
+    }, { threshold: 0.15 });
+    var rv = function (n) { n.classList.add("reveal"); seen.observe(n); return n; };
+
+    var pb = el("div", "about-block"); pb.appendChild(el("h3", "sub", "Preamble"));
+    var pr = el("div", "preamble"); pr.appendChild(el("p", "", ABOUT.preamble)); pb.appendChild(rv(pr)); at.appendChild(pb);
+
+    var ob = el("div", "about-block"), grid = el("div", "obj-grid");
+    ob.appendChild(el("h3", "sub", "Objectives and Purposes"));
+    ABOUT.objectives.forEach(function (t, i) {
+      var c = el("div", "obj"); c.appendChild(el("span", "num", String(i + 1)));
+      c.appendChild(el("h4", "", "Section " + (i + 1))); c.appendChild(el("p", "", t)); grid.appendChild(rv(c));
+    });
+    ob.appendChild(grid); at.appendChild(ob);
+
+    var cb = el("div", "about-block"), ct = el("div", "contact"), tx = el("div");
+    tx.appendChild(el("h3", "", "Contact us")); tx.appendChild(el("p", "meta", "Questions or concerns? Send the Alliance an email."));
+    var mail = el("a", "btn small fill", EMAIL); mail.href = "mailto:" + EMAIL;
+    ct.appendChild(tx); ct.appendChild(mail); cb.appendChild(rv(ct)); at.appendChild(cb);
+  }
+
+  /* 3. Footer: email on every page */
+  var fw = document.querySelector("#site-footer .wrap");
+  if (fw && typeof EMAIL !== "undefined") {
+    var ep = el("p"); ep.appendChild(document.createTextNode("Email: "));
+    var ea = el("a", "", EMAIL); ea.href = "mailto:" + EMAIL; ep.appendChild(ea); fw.appendChild(ep);
+  }
+})();
