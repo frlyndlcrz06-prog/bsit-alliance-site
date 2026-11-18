@@ -770,11 +770,6 @@
       c.appendChild(el("h4", "", "Section " + (i + 1))); c.appendChild(el("p", "", t)); grid.appendChild(rv(c));
     });
     ob.appendChild(grid); at.appendChild(ob);
-
-    var cb = el("div", "about-block"), ct = el("div", "contact"), tx = el("div");
-    tx.appendChild(el("h3", "", "Contact us")); tx.appendChild(el("p", "meta", "Questions or concerns? Send the Alliance an email."));
-    var mail = el("a", "btn small fill", EMAIL); mail.href = "mailto:" + EMAIL;
-    ct.appendChild(tx); ct.appendChild(mail); cb.appendChild(rv(ct)); at.appendChild(cb);
   }
 
   /* 3. Footer: email on every page */
