@@ -134,3 +134,18 @@ const REPORT = {
     }
   ]
 };
+
+
+/* ---------- ABOUT US ---------- */
+const EMAIL = "pupcc.bsitalliance@gmail.com";
+
+const ABOUT = {
+  preamble: "We, the BSIT Alliance of Polytechnic University of the Philippines, Calauan Campus imploring the aid of the Divine Providence, in full awareness of the nature and the extent to which we hereby bind ourselves towards fulfilling the ideas of democratic, participatory, student government under the guiding principle of unity in diversity as we unite to establish a federated alliance, do hereby ordain and promulgate this Constitution and By-Laws.",
+  objectives: [
+    "To establish an enduring BSIT Alliance that shall promote free, progressive, democratic and responsive alliance in PUP Calauan Campus.",
+    "To uphold and protect BSIT student's rights, interest and welfare.",
+    "To promote cooperation and good fellowship among Academic and Non-academic Organization BSIT Alliance, and with the University as a whole.",
+    "To enhance the spirit of leadership and camaraderie.",
+    "To establish the unification of all Academic and Non-Academic organization."
+  ]
+};
