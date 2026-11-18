@@ -586,6 +586,7 @@
       eb.parentNode.insertBefore(feat, eb.parentNode.firstChild);
     };
     EVENTS.forEach(function (e) {
+      if (!e.photos || !e.photos.length) { if (!--todo) buildFeature(); return; }
       var im = new Image();
       im.onload = function () { okIds.push(e.id); if (!--todo) buildFeature(); };
       im.onerror = function () { if (!--todo) buildFeature(); };
