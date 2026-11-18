@@ -779,3 +779,43 @@
     var ea = el("a", "", EMAIL); ea.href = "mailto:" + EMAIL; ep.appendChild(ea); fw.appendChild(ep);
   }
 })();
+
+/* ===== Round 5 (appended) ===== */
+(function () {
+  "use strict";
+  var $ = function (id) { return document.getElementById(id); };
+  function el(tag, cls, text) { var n = document.createElement(tag); if (cls) n.className = cls; if (text !== undefined) n.textContent = text; return n; }
+
+  /* 1. Landing page: announcements right under the hero */
+  var heroEl = $("hero"), ann = $("announcements");
+  if (heroEl && ann) heroEl.parentNode.insertBefore(ann, heroEl.nextSibling);
+
+  /* 2. Facebook: replace the embedded feed with the follow card + your own post cards */
+  var hold = document.querySelector(".fb-hold"); if (hold) hold.remove();
+  var wrap = document.querySelector(".fb-wrap");
+  if (wrap) {
+    var note = wrap.querySelector(".fb-card .meta"); if (note) note.remove();
+    if (typeof FB_POSTS !== "undefined" && FB_POSTS.length) {
+      var list = el("div", "fb-posts");
+      FB_POSTS.forEach(function (p) {
+        var a = el("a", "fb-post"); a.href = p.url; a.target = "_blank"; a.rel = "noopener";
+        if (p.photo) { var im = new Image(); im.alt = ""; im.onerror = function () { im.remove(); }; im.src = p.photo; a.appendChild(im); }
+        var d = el("div");
+        if (p.date) d.appendChild(el("time", "", p.date));
+        d.appendChild(el("h4", "", p.title)); d.appendChild(el("span", "more", "Read on Facebook"));
+        a.appendChild(d); list.appendChild(a);
+      });
+      wrap.appendChild(list);
+    }
+  }
+
+  /* 3. Gallery: dropdown that drives the existing filter buttons */
+  var tabs = $("gallery-tabs");
+  if (tabs && tabs.children.length) {
+    var box = el("div", "pick"), lab = el("label", "", "Show photos from"), sel = el("select");
+    sel.id = "gallery-pick"; lab.setAttribute("for", "gallery-pick");
+    Array.prototype.forEach.call(tabs.children, function (t, i) { sel.appendChild(el("option", "", i ? t.textContent : "All events")); });
+    sel.addEventListener("change", function () { tabs.children[sel.selectedIndex].click(); });
+    box.appendChild(lab); box.appendChild(sel); tabs.parentNode.insertBefore(box, tabs);
+  }
+})();
