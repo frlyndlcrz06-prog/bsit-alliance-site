@@ -416,3 +416,35 @@ body.menu-open .scrim{opacity:1;pointer-events:auto}
 
 [data-theme=dark] .preamble,[data-theme=dark] .obj,[data-theme=dark] .contact{background:rgba(37,32,43,.62);box-shadow:0 8px 24px rgba(0,0,0,.35),inset 0 0 0 1px rgba(255,255,255,.08)}
 [data-theme=dark] .obj h4{color:#f0b8c2}
+
+/* ===== round 5 fixes ===== */
+/* approval letters: hide View, keep Preview and Download */
+.letter-actions a.fill{display:none}
+.letter-actions button.btn.small{background:var(--maroon);color:#fff;border-color:var(--maroon)}
+.letter-actions button.btn.small:hover{background:var(--maroon-dark)}
+
+/* funds: running balance must not float over the tables on phones */
+@media(max-width:900px){.running{position:static}}
+
+/* gallery: dropdown instead of oval buttons */
+#gallery-tabs{display:none}
+.pick{display:flex;flex-wrap:wrap;align-items:center;gap:.7rem 1rem;margin-bottom:1.5rem}
+.pick label{font-weight:700}
+.pick select{min-width:min(100%,320px);max-width:100%;padding:.7rem 2.6rem .7rem 1rem;font:600 1rem var(--body);color:var(--ink);background:rgba(255,255,255,.75) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='9' viewBox='0 0 14 9'%3E%3Cpath d='M1 1l6 6 6-6' fill='none' stroke='%237b1e2e' stroke-width='2'/%3E%3C/svg%3E") no-repeat right .95rem center;border:2px solid var(--maroon);border-radius:10px;-webkit-appearance:none;appearance:none;cursor:pointer}
+[data-theme=dark] .pick select{background-color:#25202b;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='9' viewBox='0 0 14 9'%3E%3Cpath d='M1 1l6 6 6-6' fill='none' stroke='%23f0b8c2' stroke-width='2'/%3E%3C/svg%3E");color:#f1edf3;border-color:#f0b8c2}
+[data-theme=dark] .pick option{background:#25202b;color:#f1edf3}
+
+/* wave under the hero now meets the announcements section */
+.hero::after{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1440 60' preserveAspectRatio='none'%3E%3Cpath fill='%23f1eff3' d='M0 32C240 72 480 0 720 32S1200 62 1440 22V60H0Z'/%3E%3C/svg%3E")}
+[data-theme=dark] .hero::after{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1440 60' preserveAspectRatio='none'%3E%3Cpath fill='%231d1922' d='M0 32C240 72 480 0 720 32S1200 62 1440 22V60H0Z'/%3E%3C/svg%3E")}
+
+/* Facebook: follow card + your post cards */
+.fb-wrap{grid-template-columns:1fr}
+.fb-posts{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:1.25rem}
+.fb-post{display:flex;flex-direction:column;overflow:hidden;color:inherit;text-decoration:none;background:rgba(255,255,255,.62);-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);box-shadow:0 8px 24px rgba(31,27,36,.12),inset 0 0 0 1px rgba(255,255,255,.55);border-radius:12px;transition:transform .25s}
+.fb-post:hover{transform:translateY(-6px)}
+.fb-post img{display:block;width:100%;aspect-ratio:16/10;object-fit:cover}
+.fb-post div{padding:1rem 1.1rem 1.2rem}
+.fb-post time{color:var(--muted);font-size:.9rem;font-weight:600}
+.fb-post h4{margin:.2rem 0 .5rem;font-family:var(--display)}
+[data-theme=dark] .fb-post{background:rgba(37,32,43,.62);box-shadow:0 8px 24px rgba(0,0,0,.35),inset 0 0 0 1px rgba(255,255,255,.08)}
