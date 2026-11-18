@@ -819,3 +819,28 @@
     box.appendChild(lab); box.appendChild(sel); tabs.parentNode.insertBefore(box, tabs);
   }
 })();
+
+/* ===== Round 6: reliable email links (appended) ===== */
+(function () {
+  "use strict";
+  if (typeof EMAIL === "undefined") return;
+  var phone = window.matchMedia("(pointer: coarse)").matches;
+  var toast = document.createElement("div");
+  toast.className = "toast"; toast.setAttribute("role", "status"); document.body.appendChild(toast);
+  var timer;
+  function say(msg) {
+    toast.textContent = msg; toast.classList.add("show");
+    clearTimeout(timer); timer = setTimeout(function () { toast.classList.remove("show"); }, 3500);
+  }
+  function copy() {
+    if (!navigator.clipboard) { say("Our email: " + EMAIL); return; }
+    navigator.clipboard.writeText(EMAIL).then(function () { say("Email copied: " + EMAIL); }, function () { say("Our email: " + EMAIL); });
+  }
+  document.addEventListener("click", function (e) {
+    var a = e.target.closest && e.target.closest('a[href^="mailto:"]');
+    if (!a || phone) return; /* phones: the mail app opens normally */
+    e.preventDefault();
+    copy();
+    window.open("https://mail.google.com/mail/?view=cm&fs=1&to=" + encodeURIComponent(EMAIL), "_blank", "noopener");
+  });
+})();
