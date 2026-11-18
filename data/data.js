@@ -149,3 +149,12 @@ const ABOUT = {
     "To establish the unification of all Academic and Non-Academic organization."
   ]
 };
+
+
+/* ---------- FACEBOOK POSTS (cards under "Latest from our Facebook page") ----------
+   To add one: open the post on Facebook, click its date (or the ... menu > Copy link),
+   and paste the link as url. photo is optional: save the post's picture in
+   photos/facebook/ and write its path. Newest first. Remove the // to turn a line on. */
+const FB_POSTS = [
+  // { title: "Short title of the post", date: "November 2026", url: "https://www.facebook.com/...", photo: "photos/facebook/post-1.jpg" },
+];
